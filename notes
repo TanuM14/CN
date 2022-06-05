@@ -1,0 +1,73 @@
+#Ping command
+The Ping command allows you to test the reachability of a device on a network. Pinging a host should return four data packets, if the data packets are not returned you know there is a problem with your network connection.
+To run the basic command, at the prompt type:
+ping [host]
+The general format is ping hostname or ping IPaddress.
+#Ipconfig command
+Another indispensable and frequently used utility that is used for finding network information about your local machine like IP addresses, DNS addresses etc
+Basic Use: Finding Your IP Address and Default Gateway
+Type the command ipconfig at the prompt.
+Ip config has a number of switches the most common are:
+ipconfig /all – displays more information about the network setup on your systems including the MAC address.
+ipconfig /release – release the current IP address
+ipconfig /renew – renew IP address
+#Hostname command
+A very simple command that displays the host name of your machine.This is the name your computer uses to identify itself to the other devices and servers on your local network.This is much quicker than going to the control panel>system route.You can find this name in the System information screen in the GUI, but this command is quicker.
+#Getmac command
+Every network capable device on the internet has a unique identifying number called its MAC address. The number is assigned during manufacture and is established in the hardware of the device. Using the Getmac command, a user can determine the MAC address of their various network devices.
+#NSlookup
+The NSLookUp Windows 10 network command displays information that you can use to diagnose Domain Name System (DNS) infrastructure. Using NSLookUp without a parameter will show the DNS server your PC is currently using to resolve domain names into IP addresses. 
+#Systeminfo command
+The last command on our list is the SystemInfo command, which displays a detailed list of configuration information about your Windows 10 PC. The information listed by this command is too lengthy to mention in full but includes the installed version of Windows 10, the host name, the Product ID, the type and number of CPUs, RAM configuration, network card details and installed hotfixes.
+#tracert
+Another handy tool for troubleshooting network connections in Windows 10 is the Tracert command. This command will trace the route a data packet takes before reaching its destination, displaying information on each hop along the route.
+To run the basic command, at the prompt type:
+tracert [host]
+
+Bit stuffing is the insertion of non information bits into data. Note that stuffed bits should not be confused with overhead bits. Overhead bits are non-data bits that are necessary for transmission (usually as part of headers, checksums etc.).
+Purpose of Bit Stuffing
+In Data Link layer, the stream of bits from the physical layer is divided into data frames. The data frames can be of fixed length or variable length. In variable - length framing, the size of each frame to be transmitted may be different. So, a pattern of bits is used as a delimiter to mark the end of one frame and the beginning of the next frame. However, if the pattern occurs in the message, then mechanisms needs to be incorporated so that this situation is avoided.
+After 5 consecutive 1-bits, a 0-bit is stuffed.
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    int a[20],b[25],i,j,k,count,N;
+    printf("Enter frame size :");
+    scanf("%d",&N);
+    printf("Enter the frame in the form of 0 and 1 :");
+    for(i=0; i<N; i++)
+        scanf("%d",&a[i]);
+    i=0;
+    count=1;
+    j=0;
+    while(i<N)
+    {
+        if(a[i]==1)
+        {
+            b[j]=a[i];
+            for(k=i+1; a[k]==1 && k<N && count<5; k++)
+            {
+                j++;
+                b[j]=a[k];
+                count++;
+                if(count==5)
+                {
+                    j++;
+                    b[j]=0;
+                }
+                i=k;
+            }
+        }
+        else
+        {
+            b[j]=a[i];
+        }
+        i++;
+        j++;
+    }
+    printf("\nAfter Bit Stuffing :");
+    for(i=0; i<j; i++)
+        printf("%d",b[i]);
+    return 0;
+}
